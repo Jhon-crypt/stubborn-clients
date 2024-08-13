@@ -1,12 +1,27 @@
+import Hero from "./components/hero/hero";
+import Navs from "./components/navs/nav";
+
 export default function Home() {
   return (
-    <main style={{ height: "100vh", alignContent: "center" }}>
-      <div className=" d-flex align-items-center justify-content-center">
-        <div>
-          <h1 className="font-six test text-center display-1">Stubborn Clients</h1>
-          <p className="text-center display-4">For devs with clients that don't pay</p>
+    <>
+      <main style={{ height: "100vh", alignContent: "center" }}>
+        <Hero />
+      </main>
+
+      <main style={{ height: "100vh", alignContent: "start" }}>
+        <div className="container mt-4" id="complain">
+
+          <Navs />          
+
+          <div className="row">
+            <div className="col-4">
+
+            </div>
+          </div>
+
         </div>
-      </div>
-    </main>
+      </main>
+
+    </>
   );
 }
