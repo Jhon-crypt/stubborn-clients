@@ -1,13 +1,10 @@
+.font {
+  font-family: "Montserrat", sans-serif;
+}
+
 .font-six {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
-  font-style: normal;
-}
-
-.font-four {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
   font-style: normal;
 }
