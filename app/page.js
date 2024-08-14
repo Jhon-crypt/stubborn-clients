@@ -1,6 +1,7 @@
 import Hero from "./components/hero/hero";
 import Navs from "./components/navs/nav";
 import TagCards from "./components/cards/tagsCard";
+import TagClientModal from "./components/modal/tagClientModal";
 
 export default function Home() {
   return (
@@ -31,7 +32,6 @@ export default function Home() {
 
         </div>
       </main>
-
     </>
   );
 }

@@ -1,3 +1,5 @@
+import TagClientModal from "../modal/tagClientModal"
+
 export default function Navs() {
 
     return (
@@ -10,11 +12,13 @@ export default function Navs() {
 
                 </div>
                 <div>
-                    <button className="btn btn-md btn-outline-dark" style={{ borderRadius: "30px" }}>
+                    <button className="btn btn-md btn-outline-dark" data-bs-toggle="modal" data-bs-target="#tagClientModal" style={{ borderRadius: "30px" }}>
                         Tag a client
                     </button>
                 </div>
             </div>
+
+            <TagClientModal />
 
         </>
 

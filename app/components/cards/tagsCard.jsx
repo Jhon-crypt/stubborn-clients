@@ -1,5 +1,6 @@
 import { FaEye } from "react-icons/fa";
 import { BsTrash } from "react-icons/bs";
+import { BiRepost } from "react-icons/bi";
 
 export default function TagCards() {
 
@@ -10,13 +11,19 @@ export default function TagCards() {
             <div className="card font MB-3" style={{ borderRadius: "30px" }}>
                 <div className="card-body px-3">
                     <div className="card-head mb-3">
-                        <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9",borderRadius: "30px"}}>tagged by <u>@johnnn0x</u></span>
+                        <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9", borderRadius: "30px" }}>tagged by <u>@johnnn0x</u></span>
                     </div>
                     <div className="card-content">
                         <p>I worked for over nskdsh hgdkg hgd kkjda hggajh  hdjad hiude8deduedue</p>
-                        <a className="card-link text-decoration-none text-dark"><FaEye /> view</a>
-                        <a className="card-link text-decoration-none text-dark"><BsTrash /> delete</a>
-                        <a className="card-link text-decoration-none text-dark"><BsTrash /> repost</a>
+                        <a className="card-link text-decoration-none text-dark">
+                            <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9", borderRadius: "30px" }}><FaEye /> view</span>
+                        </a>
+                        <a className="card-link text-decoration-none text-dark">
+                            <span class="badge text-danger py-2" style={{ backgroundColor: "#F8D7DA", borderRadius: "30px" }}><BsTrash /> delete</span>
+                        </a>
+                        <a className="card-link text-decoration-none text-dark">
+                            <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9", borderRadius: "30px" }}><BiRepost /> repost</span>
+                        </a>
                     </div>
                 </div>
             </div>
