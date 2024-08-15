@@ -20,11 +20,15 @@ export default function TagClientModal() {
 
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Client username</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="@stubbornClient419" style={{ borderRadius: "30px" }}/>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="@stubbornClient419" style={{ borderRadius: "30px" }} />
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Your username</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="@inncoentDev666" style={{ borderRadius: "30px" }}/>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="@inncoentDev666" style={{ borderRadius: "30px" }} />
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Upload screenshot proofs</label>
+                                <input class="form-control" type="file" id="formFile" style={{ borderRadius: "30px" }}/>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Your complain</label>
