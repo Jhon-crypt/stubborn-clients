@@ -2,7 +2,7 @@ import { FaEye } from "react-icons/fa";
 import { BsTrash } from "react-icons/bs";
 import { BiRepost } from "react-icons/bi";
 
-export default function TagCards() {
+export default function TagCards(props) {
 
     return (
 
@@ -11,26 +11,25 @@ export default function TagCards() {
             <div className="card font MB-3" style={{ borderRadius: "30px" }}>
                 <div className="card-body px-3">
                     <div className="card-head mb-3">
-                        <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9", borderRadius: "30px" }}>tagged by <u>@johnnn0x</u></span>
+                        <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9", borderRadius: "30px" }}>tagged by <u>{props.creator}</u></span>
                     </div>
                     <div className="card-content">
-                        <p>I worked for over nskdsh hgdkg hgd kkjda hggajh  hdjad hiude8deduedue</p>
+                        <p>{props.complain}</p>
 
                         <p>
-                            <button class="btn btn-btn-md btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample" style={{ borderRadius: "30px" }}>
+                            <button class="btn btn-btn-md btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${props.tag_id}`} aria-expanded="false" aria-controls="collapseWidthExample" style={{ borderRadius: "30px" }}>
                                 View proofs
                             </button>
                         </p>
                         <div style={{ "minHeight": "100px;" }}>
-                            <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                            <div class="collapse collapse-horizontal" id={`collapse${props.tag_id}`}>
                                 <div class="card card-body mb-5">
                                     <div className="row row-cols-1">
-                                        <div className="col mb-3">
-                                            <img className="rounded img-thumbnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbPsS2NGH4mCKJ5DwPz3x4yFCdl6UQiDvr6Q&s" style={{ width: '100%', height: '100px', objectFit: 'cover' }} />
-                                        </div>
-                                        <div className="col">
-                                            <img className="rounded img-thumbnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbPsS2NGH4mCKJ5DwPz3x4yFCdl6UQiDvr6Q&s" style={{ width: '100%', height: '100px', objectFit: 'cover' }} />
-                                        </div>
+                                        {props.proofs.map((image, index) => (
+                                            <div className="col mb-3" key={index}>
+                                                <img className="rounded img-thumbnail" src={`https://floffshqxewdpeyrrwbl.supabase.co/storage/v1/object/public/proofs/${image}`} style={{ width: '100%', height: '100px', objectFit: 'cover' }} />
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
