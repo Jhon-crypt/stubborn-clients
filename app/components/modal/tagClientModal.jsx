@@ -1,4 +1,77 @@
+"use client"
+import { useState, useRef } from 'react';
+import { FaRegTrashCan } from "react-icons/fa6";
+import { FaXTwitter } from "react-icons/fa6";
+
 export default function TagClientModal() {
+
+    const fileInputRef = useRef(null); // Reference for file input
+
+    const [formData, setFormData] = useState({
+        clientUsername: '',
+        devUsername: '',
+        images: [],
+        complain: '' // Updated to handle multiple images
+    });
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+
+        Promise.all(files.map(fileToDataURL))
+            .then((images) => {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    images: [...prevData.images, ...images]
+                }));
+            })
+            .catch((error) => {
+                console.error('Error reading files:', error);
+            });
+    };
+
+    const fileToDataURL = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                resolve(reader.result);
+            };
+
+            reader.onerror = () => {
+                reject(reader.error);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const handleDelete = (index) => {
+        setFormData((prevData) => {
+            const updatedImages = [...prevData.images];
+            updatedImages.splice(index, 1);
+            return {
+                ...prevData,
+                images: updatedImages
+            };
+        });
+
+        // Reset the file input field
+        fileInputRef.current.value = null;
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+    }
 
     return (
 
@@ -13,31 +86,44 @@ export default function TagClientModal() {
                         </div>
                         <div class="modal-body font">
                             <div className="d-flex align-items-center justify-content-center">
-                                <div className="alert alert-info p-2 text-center" style={{ borderRadius: "30px" }}>
-                                    When you tag, we post @stubbornClients on x
+                                <div className="alert alert-info p-2 text-center" style={{ borderRadius: "30px", fontSize: "14px" }}>
+                                    When you tag, we post @stubbornClients on <FaXTwitter />
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Client username</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="@stubbornClient419" style={{ borderRadius: "30px" }} />
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Your username</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="@inncoentDev666" style={{ borderRadius: "30px" }} />
-                            </div>
-                            <div class="mb-3">
-                                <label for="formFile" class="form-label">Upload screenshot proofs</label>
-                                <input class="form-control" type="file" id="formFile" style={{ borderRadius: "30px" }}/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Your complain</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style={{ borderRadius: "30px" }}></textarea>
-                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Client username on <FaXTwitter />(formerly twitter)</label>
+                                    <input type="text" name="clientUsername" value={formData.clientUsername} onChange={handleChange} class="form-control" id="exampleFormControlInput1" placeholder="@stubbornClient419" style={{ borderRadius: "30px" }} required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Your username on <FaXTwitter />(formerly twitter)</label>
+                                    <input type="text" name="devUsername" value={formData.devUsername} onChange={handleChange} class="form-control" id="exampleFormControlInput1" placeholder="@inncoentDev666" style={{ borderRadius: "30px" }} required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Upload screenshot proofs</label>
+                                    <input ref={fileInputRef} multiple accept="image/*" onChange={handleImageChange} class="form-control" type="file" id="formFile" style={{ borderRadius: "30px" }} />
+                                </div>
+                                <div>
+                                    {formData.images.map((image, index) => (
+                                        <div key={index} className="position-relative d-inline-block me-2">
+                                            <img className="img-thumbnail rounded mb-3" src={image} style={{ width: '100px', height: '100px', objectFit: 'contain' }} alt={`Thumbnail ${index}`} />
+                                            <button className="btn btn-danger btn-sm position-absolute top-0 end-0 bg-light text-danger" onClick={() => handleDelete(index)}>
+                                                <FaRegTrashCan />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Your complain</label>
+                                    <textarea name="complain" value={formData.complain} onChange={handleChange} class="form-control" id="exampleFormControlTextarea1" rows="3" style={{ borderRadius: "30px" }} required></textarea>
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark" style={{ borderRadius: "30px" }}>Create Tag</button>
                         </div>
+
                     </div>
                 </div>
             </div>
