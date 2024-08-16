@@ -85,7 +85,7 @@ export async function POST(req) {
                 }
                 const paths = uploadResults.map(result => result.message.path);
                 const update = await UpdateTagImageArray(paths, tag_id)
-                return { message: "Images processed", update: update, status: 200 };
+                return { message: "Client successfully tagged", update: update, status: 200 };
 
             } catch (error) {
                 return { message: "Could not upload images to supabase", status: 500 }; // Ensure the error message is serializable
@@ -124,6 +124,6 @@ export async function POST(req) {
         return NextResponse.json(run_functions, { status: run_functions.status });
 
     } else {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 }

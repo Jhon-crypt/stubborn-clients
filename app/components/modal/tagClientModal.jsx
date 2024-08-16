@@ -2,6 +2,8 @@
 import { useState, useRef } from 'react';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TagClientModal() {
 
@@ -69,6 +71,7 @@ export default function TagClientModal() {
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true)
 
         e.preventDefault();
 
@@ -80,7 +83,37 @@ export default function TagClientModal() {
             data.append(`images${index}`, image);
         });
 
-        console.log(formData)
+        const BearerToken = process.env.NEXT_PUBLIC_API_BEARER_KEY;
+
+        const payload = {
+            creator: formData.devUsername,
+            client: formData.clientUsername,
+            complain: formData.complain,
+            images: formData.images
+        }
+
+        const response = await fetch('/api/tag-clients', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${BearerToken}`
+            },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+            const error_response = await response.json();
+            //console.log(error_response.error)
+            toast.error(`${error_response.message}`, {
+                position: "top-right"
+            });
+            setLoading(false)
+        } else {
+            const success_response = await response.json();
+            toast.success(`${success_response.message}`, {
+                position: "top-right"
+            });
+            setLoading(false)
+        }
 
     }
 
@@ -150,6 +183,7 @@ export default function TagClientModal() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
 
         </>
 
