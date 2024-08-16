@@ -5,6 +5,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default function TagClientModal() {
 
+    const [loading, setLoading] = useState(false)
     const fileInputRef = useRef(null); // Reference for file input
 
     const [formData, setFormData] = useState({
@@ -71,6 +72,16 @@ export default function TagClientModal() {
 
         e.preventDefault();
 
+        const data = new FormData();
+        data.append('clientUsername', formData.clientUsername);
+        data.append('devUsername', formData.devUsername);
+        data.append('complain', formData.complain);
+        formData.images.forEach((image, index) => {
+            data.append(`images${index}`, image);
+        });
+
+        console.log(formData)
+
     }
 
     return (
@@ -80,25 +91,25 @@ export default function TagClientModal() {
             <div class="modal fade" id="tagClientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Tag client</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body font">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div className="alert alert-info p-2 text-center" style={{ borderRadius: "30px", fontSize: "14px" }}>
-                                    When you tag, we post @stubbornClients on <FaXTwitter />
-                                </div>
+                        <form onSubmit={handleSubmit}>
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Tag client</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            <div class="modal-body font">
+                                <div className="d-flex align-items-center justify-content-center">
+                                    <div className="alert alert-info p-2 text-center" style={{ borderRadius: "30px", fontSize: "14px" }}>
+                                        When you tag, we post @stubbornClients on <FaXTwitter />
+                                    </div>
+                                </div>
 
-                            <form onSubmit={handleSubmit}>
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Client username on <FaXTwitter />(formerly twitter)</label>
-                                    <input type="text" name="clientUsername" value={formData.clientUsername} onChange={handleChange} class="form-control" id="exampleFormControlInput1" placeholder="@stubbornClient419" style={{ borderRadius: "30px" }} required/>
+                                    <input type="text" name="clientUsername" value={formData.clientUsername} onChange={handleChange} class="form-control" id="exampleFormControlInput1" placeholder="@stubbornClient419" style={{ borderRadius: "30px" }} required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Your username on <FaXTwitter />(formerly twitter)</label>
-                                    <input type="text" name="devUsername" value={formData.devUsername} onChange={handleChange} class="form-control" id="exampleFormControlInput1" placeholder="@inncoentDev666" style={{ borderRadius: "30px" }} required/>
+                                    <input type="text" name="devUsername" value={formData.devUsername} onChange={handleChange} class="form-control" id="exampleFormControlInput1" placeholder="@inncoentDev666" style={{ borderRadius: "30px" }} required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Upload screenshot proofs</label>
@@ -118,12 +129,24 @@ export default function TagClientModal() {
                                     <label for="exampleFormControlTextarea1" class="form-label">Your complain</label>
                                     <textarea name="complain" value={formData.complain} onChange={handleChange} class="form-control" id="exampleFormControlTextarea1" rows="3" style={{ borderRadius: "30px" }} required></textarea>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark" style={{ borderRadius: "30px" }}>Create Tag</button>
-                        </div>
 
+                            </div>
+                            <div class="modal-footer">
+                                {loading ? (
+                                    <>
+                                        <button disabled type="submit" class="btn btn-outline-dark" style={{ borderRadius: "30px" }}>
+                                            Tagging....
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button type="submit" class="btn btn-outline-dark" style={{ borderRadius: "30px" }}>
+                                            Create
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
