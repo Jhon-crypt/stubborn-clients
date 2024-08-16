@@ -168,7 +168,7 @@ export default function TagClientModal() {
                                 {loading ? (
                                     <>
                                         <button disabled type="submit" class="btn btn-outline-dark" style={{ borderRadius: "30px" }}>
-                                            Tagging....
+                                            Tagging...
                                         </button>
                                     </>
                                 ) : (
