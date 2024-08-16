@@ -83,12 +83,34 @@ export async function POST(req) {
                         uploadResults.push({ message: data, status: 200 });
                     }
                 }
-                console.log(uploadResults)
-                return { message: "Images processed", status: 200 };
+                const paths = uploadResults.map(result => result.message.path);
+                const update = await UpdateTagImageArray(paths, tag_id)
+                return { message: "Images processed", update: update, status: 200 };
 
             } catch (error) {
                 return { message: "Could not upload images to supabase", status: 500 }; // Ensure the error message is serializable
             }
+        }
+
+        async function UpdateTagImageArray(path, tag_id) {
+
+            try {
+
+                const { data, error } = await supabase
+                    .from('tags')
+                    .update({ images: path })
+                    .eq('tag_id', tag_id)
+                    .select()
+                if(error){
+                    console.log(error)
+                }else{
+                    console.log(data)
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+
         }
 
         const run_functions = await storeTagInSupabase(
