@@ -8,7 +8,7 @@ export default function TagCards(props) {
 
         <>
 
-            <div className="card font MB-3" style={{ borderRadius: "30px" }}>
+            <div className="card font mb-3" style={{ borderRadius: "30px" }}>
                 <div className="card-body px-3">
                     <div className="card-head mb-3">
                         <span class="badge text-dark py-2" style={{ backgroundColor: "#F1F4F9", borderRadius: "30px" }}>tagged by <u>{props.creator}</u></span>
