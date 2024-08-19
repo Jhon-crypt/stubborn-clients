@@ -109,6 +109,8 @@ export default function TagClientModal() {
             setLoading(false)
         } else {
             const success_response = await response.json();
+            window.location.href = `/#complain`;
+            window.location.reload();  // Explicitly reload the page
             toast.success(`${success_response.message}`, {
                 position: "top-right"
             });

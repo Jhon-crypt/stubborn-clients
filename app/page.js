@@ -12,7 +12,10 @@ export default function Home() {
 
   useEffect(() => {
     fetchTags();
-    TagListener();
+    const listener = TagListener();
+    return () => {
+      listener.unsubscribe(); // Cleanup the listener when the component unmounts.
+    };
   }, []);
 
   async function fetchTags() {
@@ -39,23 +42,20 @@ export default function Home() {
     }
   }
 
-  async function TagListener() {
+  function TagListener() {
     const tagListener = supabase
       .channel('any')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'tags' }, payload => {
         const newTag = payload.new;
-        setTags((oldTag) => {
-          // Add the newly inserted project to the list of projects and sort them by ID.
-          const newTags = [...oldTag, newTag];
+        setTags(oldTags => {
+          const newTags = [...oldTags, newTag];
           newTags.sort((a, b) => b.id - a.id);
           return newTags;
         });
       })
       .subscribe();
 
-    return () => {
-      supabase.removeChannel(tagListener); // Cleanup: remove the listener when the component is unmounted.
-    };
+    return tagListener; // Return the listener to unsubscribe later.
   }
 
   return (
@@ -79,8 +79,8 @@ export default function Home() {
             <>
               <div className="row">
                 {tags.map((tags) => (
-                  <div className="col mb-3">
-                    <TagCards tag_id={tags.tag_id} creator={tags.creator} client={tags.client} complain={tags.complain} proofs={tags.images}/>
+                  <div className="col mb-3" key={tags.id}>
+                    <TagCards tag_id={tags.tag_id} creator={tags.creator} client={tags.client} complain={tags.complain} proofs={tags.images} />
                   </div>
                 ))}
               </div>
