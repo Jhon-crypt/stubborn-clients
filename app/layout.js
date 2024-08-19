@@ -6,7 +6,7 @@ import Head from "next/head";
 
 export const metadata = {
   title: "Stubborn Clients",
-  description: "For Devs With Stubborn Clients",
+  description: "For Devs With Stubborn Client",
 };
 
 export default function RootLayout({ children }) {
